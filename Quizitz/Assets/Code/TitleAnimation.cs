@@ -4,38 +4,33 @@ using UnityEngine;
 
 public class TitleAnimation : MonoBehaviour
 {
-    public float targetYPosition = 0f;   // Final Y position for the title in the center
-    public float speed = 2f;             // Speed of the animation
+    public float amplitude = 20f;    // How high the title will move up and down
+    public float frequency = 2f;     // How fast the title bops up and down
 
     private RectTransform rectTransform;
-    private float velocity = 0f;         // Used for SmoothDamp
+    private float initialY;          // Store the initial Y position
 
     private void Start()
     {
-        // Get the RectTransform component of the title
         rectTransform = GetComponent<RectTransform>();
 
-        // Check if the component exists
         if (rectTransform == null)
         {
             Debug.LogError("RectTransform component not found!");
             enabled = false;
+            return;
         }
+
+        // Store the initial Y position of the title
+        initialY = rectTransform.anchoredPosition.y;
     }
 
     private void Update()
     {
-        // Smoothly move the Y position to the target
-        float newYPosition = Mathf.SmoothDamp(rectTransform.anchoredPosition.y, targetYPosition, ref velocity, 1 / speed);
+        // Calculate the new Y position with a sine wave for bopping effect
+        float newY = initialY + Mathf.Sin(Time.time * frequency) * amplitude;
 
         // Apply the new Y position
-        rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, newYPosition);
-
-        // Stop the animation when the title is close enough to the target position
-        if (Mathf.Abs(newYPosition - targetYPosition) < 0.1f)
-        {
-            rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, targetYPosition);
-            enabled = false; // Stop updating once the position is reached
-        }
+        rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, newY);
     }
 }
