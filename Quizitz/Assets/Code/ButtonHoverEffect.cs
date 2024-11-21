@@ -1,44 +1,43 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using UnityEngine.EventSystems;  // Required for Event Triggers
 
 public class ButtonHoverEffect : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public Vector3 hoverScale = new Vector3(0.9f, 0.9f, 0.9f);  // Scale when hovering
-    public float animationSpeed = 10f;                          // Speed of the scaling effect
-
     private Vector3 originalScale;
-    private RectTransform rectTransform;
+    [SerializeField] private float scaleFactor = 1.2f;  // How much bigger the button will get when hovered over
+    [SerializeField] private float scaleSpeed = 0.2f;   // Speed of the scaling transition
 
     private void Start()
     {
-        rectTransform = GetComponent<RectTransform>();
-        originalScale = rectTransform.localScale;               // Store the original scale
+        // Store the original size of the button
+        originalScale = transform.localScale;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        // Start scaling to the hover scale when the mouse enters
-        StopAllCoroutines();
-        StartCoroutine(ScaleTo(hoverScale));
+        // Scale up the button when mouse enters
+        StopAllCoroutines();  // Stop any ongoing scaling animation
+        StartCoroutine(ScaleButton(transform.localScale, originalScale * scaleFactor));
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        // Return to the original scale when the mouse exits
-        StopAllCoroutines();
-        StartCoroutine(ScaleTo(originalScale));
+        // Scale down the button when mouse exits
+        StopAllCoroutines();  // Stop any ongoing scaling animation
+        StartCoroutine(ScaleButton(transform.localScale, originalScale));
     }
 
-    private System.Collections.IEnumerator ScaleTo(Vector3 targetScale)
+    private System.Collections.IEnumerator ScaleButton(Vector3 fromScale, Vector3 toScale)
     {
-        while (Vector3.Distance(rectTransform.localScale, targetScale) > 0.01f)
+        float timeElapsed = 0;
+
+        while (timeElapsed < scaleSpeed)
         {
-            rectTransform.localScale = Vector3.Lerp(rectTransform.localScale, targetScale, Time.deltaTime * animationSpeed);
+            transform.localScale = Vector3.Lerp(fromScale, toScale, timeElapsed / scaleSpeed);
+            timeElapsed += Time.deltaTime;
             yield return null;
         }
-        rectTransform.localScale = targetScale;  // Snap to the target scale when close enough
+
+        transform.localScale = toScale;  // Ensure it ends at the final scale
     }
 }
-
