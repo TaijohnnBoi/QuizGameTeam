@@ -14,11 +14,17 @@ public class EnemyCursorWatcher : MonoBehaviour
     private bool isActive = false;         // If the enemy is currently on screen
     private float stillTime = 0f;          // Tracks how long the player has kept the mouse still
 
+    // Jumpscare variables
+    public GameObject jumpscareImage;      // Reference to jumpscare image
+    public float shakeIntensity = 20f;     // How far the image shakes
+    public float shakeSpeed = 50f;         // How fast the image shakes
+
     void Start()
     {
         enemyRect = GetComponent<RectTransform>();
         HideEnemy(); // Start with the enemy hidden
         Invoke(nameof(Respawn), respawnTime); // Start respawn timer
+        if (jumpscareImage != null) jumpscareImage.SetActive(false); // Hide jumpscare image initially
     }
 
     void Update()
@@ -101,8 +107,45 @@ public class EnemyCursorWatcher : MonoBehaviour
     private void TriggerJumpscare()
     {
         Debug.Log("JUMPSCARE! The player moved the mouse too much!");
-        // Add your jumpscare logic here, e.g., load a jumpscare animation or sound
-        HideEnemy(); // Hide the enemy after the jumpscare
+
+        // Display jumpscare image
+        if (jumpscareImage != null)
+        {
+            jumpscareImage.SetActive(true);
+            StartCoroutine(ShakeJumpscare()); // Shake effect while the jumpscare is displayed
+        }
+
+        // Hide the enemy and start respawn timer
+        HideEnemy();
         Invoke(nameof(Respawn), respawnTime); // Respawn the enemy after a delay
+    }
+
+    private System.Collections.IEnumerator ShakeJumpscare()
+    {
+        Vector3 originalPos = jumpscareImage.transform.localPosition;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < 2f) // Shake for 2 seconds during the jumpscare
+        {
+            Vector3 randomOffset = new Vector3(
+                Random.Range(-shakeIntensity, shakeIntensity),
+                Random.Range(-shakeIntensity, shakeIntensity),
+                0
+            );
+
+            jumpscareImage.transform.localPosition = originalPos + randomOffset;
+            elapsedTime += Time.deltaTime;
+
+            yield return new WaitForSeconds(1f / shakeSpeed); // Control shake speed
+        }
+
+        // Reset jumpscare position
+        if (jumpscareImage != null)
+        {
+            jumpscareImage.transform.localPosition = originalPos;
+        }
+
+        // Optionally, you can hide the jumpscare image after a delay
+        jumpscareImage.SetActive(false);
     }
 }
