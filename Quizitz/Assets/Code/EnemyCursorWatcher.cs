@@ -18,6 +18,7 @@ public class EnemyCursorWatcher : MonoBehaviour
     public GameObject jumpscareImage;      // Reference to jumpscare image
     public float shakeIntensity = 20f;     // How far the image shakes
     public float shakeSpeed = 50f;         // How fast the image shakes
+    public LifeSystem lifeSystem;          // Reference to the life system script
 
     void Start()
     {
@@ -107,6 +108,12 @@ public class EnemyCursorWatcher : MonoBehaviour
     private void TriggerJumpscare()
     {
         Debug.Log("JUMPSCARE! The player moved the mouse too much!");
+
+        // Reduce a life
+        if (lifeSystem != null)
+        {
+            lifeSystem.LoseLife();
+        }
 
         // Display jumpscare image
         if (jumpscareImage != null)

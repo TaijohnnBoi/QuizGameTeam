@@ -5030,12 +5030,12 @@ GameObject:
   - component: {fileID: 267547696}
   - component: {fileID: 267547695}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Evil dude
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &267547694
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5074,6 +5074,7 @@ MonoBehaviour:
   jumpscareImage: {fileID: 870245348}
   shakeIntensity: 20
   shakeSpeed: 50
+  lifeSystem: {fileID: 691786550}
 --- !u!114 &267547696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5507,7 +5508,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &296748528
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9787,6 +9788,7 @@ MonoBehaviour:
   darkOverlay: {fileID: 463810669}
   jumpscareImage: {fileID: 952420279}
   jumpscareDuration: 2
+  lifeSystem: {fileID: 691786550}
   shakeIntensity: 20
   shakeSpeed: 50
   riseSpeed: 2000
@@ -30812,7 +30814,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2102318277
 RectTransform:
   m_ObjectHideFlags: 0

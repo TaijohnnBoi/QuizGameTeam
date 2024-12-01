@@ -15,6 +15,7 @@ public class DarkGuyBehavior : MonoBehaviour
     public GameObject darkOverlay; // Black overlay for "lights off" effect
     public GameObject jumpscareImage; // Jumpscare UI element
     public float jumpscareDuration = 2f; // How long the jumpscare lasts
+    public LifeSystem lifeSystem; // Reference to the life system
 
     // Shake effect variables
     public float shakeIntensity = 20f; // How far the image shakes
@@ -119,88 +120,77 @@ public class DarkGuyBehavior : MonoBehaviour
         }
     }
 
-    // Update the timer display
     private void UpdateTimerUI()
     {
         timerText.text = Mathf.Ceil(currentTimer).ToString();
     }
 
-    // Start the rising animation
     private void StartRising()
     {
         isRising = true;
     }
 
-    // Called when the enemy finishes rising and the lights are off
     private void EnemyFullyRisen()
     {
         isRising = false;
         isWaitingToDescend = true;
 
-        // Reset lights-off timer
         lightsOffTimer = lightsOffDuration;
     }
 
-    // Start descending after lights-off duration
     private void StartDescending()
     {
         isWaitingToDescend = false;
-        lightsOff = false; // Automatically turn lights back on
+        lightsOff = false;
         darkOverlay.SetActive(false);
     }
 
-    // Reset the enemy to its initial state
     private void ResetEnemy()
     {
         isWaitingToDescend = false;
         currentTimer = timeToRise;
     }
 
-    // Handle toggling lights on/off
     private void ToggleLights()
     {
         lightsOff = !lightsOff;
         darkOverlay.SetActive(lightsOff);
     }
 
-    // Trigger the jumpscare
     private void TriggerJumpscare()
     {
-        // Ensure jumpscare only happens if the lights are on
         if (lightsOff) return;
 
         jumpscareActive = true;
         jumpscareImage.SetActive(true);
 
-        // Stop all other actions temporarily
+        if (lifeSystem != null)
+        {
+            lifeSystem.LoseLife(); // Deduct a life when the jumpscare happens
+        }
+
         isRising = false;
         isWaitingToDescend = false;
 
-        // Start shaking effect
         StartCoroutine(ShakeJumpscare());
 
-        // Wait for jumpscare duration, then reset
         Invoke(nameof(EndJumpscare), jumpscareDuration);
     }
 
-    // End the jumpscare and reset the game state
     private void EndJumpscare()
     {
         jumpscareActive = false;
         jumpscareImage.SetActive(false);
 
-        // Reset jumpscare image position
         if (jumpscareImage != null)
         {
             jumpscareImage.transform.localPosition = originalJumpscarePosition;
         }
 
-        // Reset enemy position
         enemyRect.anchoredPosition = startPosition;
         ResetEnemy();
     }
 
-    // Shake effect coroutine
     private System.Collections.IEnumerator ShakeJumpscare()
     {
         float elapsedTime = 0;
@@ -217,7 +207,7 @@ public class DarkGuyBehavior : MonoBehaviour
 
             elapsedTime += Time.deltaTime;
 
-            yield return new WaitForSeconds(1f / shakeSpeed); // Control shake speed
+            yield return new WaitForSeconds(1f / shakeSpeed);
         }
     }
 }
