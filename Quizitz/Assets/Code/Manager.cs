@@ -1,13 +1,24 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Manager : MonoBehaviour
 {
-    public GameObject[] Levels;
+    public GameObject[] Levels; // Array of level objects
+    public Image goodFlashScreen; // Reference to the "good" flash screen
+    public float flashDuration = 0.5f; // Duration of the flash effect
 
-    private int currentLevel;
+    int currentLevel;
 
-    // Ensure this method is correctly placed inside the class, not inside another method
-    public void CorrectAnswer()
+    void Start()
+    {
+        // Ensure the good flash screen is hidden at the start
+        if (goodFlashScreen != null)
+        {
+            goodFlashScreen.gameObject.SetActive(false);
+        }
+    }
+
+    public void correctAnswer()
     {
         if (currentLevel + 1 != Levels.Length)
         {
@@ -15,12 +26,46 @@ public class Manager : MonoBehaviour
 
             currentLevel++;
             Levels[currentLevel].SetActive(true);
+
+            // Trigger the flash effect
+            if (goodFlashScreen != null)
+            {
+                StartCoroutine(FlashGoodScreen());
+            }
         }
     }
 
-    // Example method to check if the enemy is active
-    public bool IsEnemyActive()
+    private System.Collections.IEnumerator FlashGoodScreen()
     {
-        return true; // Replace this with your actual logic
+        // Activate the flash screen
+        goodFlashScreen.gameObject.SetActive(true);
+
+        // Gradually fade in the flash screen
+        Color color = goodFlashScreen.color;
+        float elapsedTime = 0f;
+
+        // Fade in
+        while (elapsedTime < flashDuration / 2)
+        {
+            elapsedTime += Time.deltaTime;
+            color.a = Mathf.Lerp(0, 1, elapsedTime / (flashDuration / 2));
+            goodFlashScreen.color = color;
+            yield return null;
+        }
+
+        // Reset elapsed time for fade-out
+        elapsedTime = 0f;
+
+        // Fade out
+        while (elapsedTime < flashDuration / 2)
+        {
+            elapsedTime += Time.deltaTime;
+            color.a = Mathf.Lerp(1, 0, elapsedTime / (flashDuration / 2));
+            goodFlashScreen.color = color;
+            yield return null;
+        }
+
+        // Deactivate the flash screen
+        goodFlashScreen.gameObject.SetActive(false);
     }
 }
