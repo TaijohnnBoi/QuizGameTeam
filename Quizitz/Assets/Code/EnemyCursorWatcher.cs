@@ -20,9 +20,14 @@ public class EnemyCursorWatcher : MonoBehaviour
     public float shakeSpeed = 50f;         // How fast the image shakes
     public LifeSystem lifeSystem;          // Reference to the life system script
 
+    // Audio variables
+    public AudioClip enemyAudio;           // Audio clip to play when the enemy appears
+    private AudioSource audioSource;       // AudioSource to play the sound
+
     void Start()
     {
         enemyRect = GetComponent<RectTransform>();
+        audioSource = GetComponent<AudioSource>(); // Get the AudioSource component
         HideEnemy(); // Start with the enemy hidden
         Invoke(nameof(Respawn), respawnTime); // Start respawn timer
         if (jumpscareImage != null) jumpscareImage.SetActive(false); // Hide jumpscare image initially
@@ -63,6 +68,13 @@ public class EnemyCursorWatcher : MonoBehaviour
         // Animate the enemy scrolling up quickly
         enemyRect.anchoredPosition = new Vector2(0, -enemyRect.rect.height);
         StartCoroutine(ScrollUp());
+
+        // Play the audio when the enemy appears
+        if (enemyAudio != null && audioSource != null)
+        {
+            audioSource.clip = enemyAudio;
+            audioSource.Play(); // Play the audio when the enemy shows up
+        }
     }
 
     private System.Collections.IEnumerator ScrollUp()
