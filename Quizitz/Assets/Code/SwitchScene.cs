@@ -5,8 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class SwitchScene : MonoBehaviour
 {
-    public void switchScenes(string sceneName)
+    public void SwitchScenes(string sceneName)
     {
+        Time.timeScale = 1; // Ensure the game is running at normal speed
         SceneManager.LoadScene(sceneName);
     }
 }
