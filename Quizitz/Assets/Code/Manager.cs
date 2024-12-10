@@ -1,71 +1,44 @@
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class Manager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
-    public GameObject[] Levels; // Array of level objects
-    public Image goodFlashScreen; // Reference to the "good" flash screen
-    public float flashDuration = 0.5f; // Duration of the flash effect
+    public static GameManager Instance; // Singleton instance to manage the game globally
 
-    int currentLevel;
-
-    void Start()
+    private void Awake()
     {
-        // Ensure the good flash screen is hidden at the start
-        if (goodFlashScreen != null)
+        // Ensure there is only one instance of the GameManager
+        if (Instance == null)
         {
-            goodFlashScreen.gameObject.SetActive(false);
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // Keep this object across scene loads
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 
-    public void correctAnswer()
+    // Method to restart the game and reset everything
+    public void RestartGame()
     {
-        if (currentLevel + 1 != Levels.Length)
-        {
-            Levels[currentLevel].SetActive(false);
+        // Optionally reset any static or global variables here
+        ResetGameState();
 
-            currentLevel++;
-            Levels[currentLevel].SetActive(true);
-
-            // Trigger the flash effect
-            if (goodFlashScreen != null)
-            {
-                StartCoroutine(FlashGoodScreen());
-            }
-        }
+        // Load the tutorial scene
+        SceneManager.LoadScene("Tutorial");
     }
 
-    private System.Collections.IEnumerator FlashGoodScreen()
+    // Method to reset game states (example)
+    private void ResetGameState()
     {
-        // Activate the flash screen
-        goodFlashScreen.gameObject.SetActive(true);
+        // Reset any static or persistent variables here (if applicable)
+        LifeSystem.ResetLives(); // Example: Reset lives if you're using a life system
+    }
 
-        // Gradually fade in the flash screen
-        Color color = goodFlashScreen.color;
-        float elapsedTime = 0f;
-
-        // Fade in
-        while (elapsedTime < flashDuration / 2)
-        {
-            elapsedTime += Time.deltaTime;
-            color.a = Mathf.Lerp(0, 1, elapsedTime / (flashDuration / 2));
-            goodFlashScreen.color = color;
-            yield return null;
-        }
-
-        // Reset elapsed time for fade-out
-        elapsedTime = 0f;
-
-        // Fade out
-        while (elapsedTime < flashDuration / 2)
-        {
-            elapsedTime += Time.deltaTime;
-            color.a = Mathf.Lerp(1, 0, elapsedTime / (flashDuration / 2));
-            goodFlashScreen.color = color;
-            yield return null;
-        }
-
-        // Deactivate the flash screen
-        goodFlashScreen.gameObject.SetActive(false);
+    // Call this to start the main game
+    public void StartMainGame()
+    {
+        SceneManager.LoadScene("MainGame"); // Load the main game scene
     }
 }
