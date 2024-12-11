@@ -1092,7 +1092,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 588902830}
         m_TargetAssemblyTypeName: SwitchScene, Assembly-CSharp
-        m_MethodName: switchScenes
+        m_MethodName: SwitchScenes
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
