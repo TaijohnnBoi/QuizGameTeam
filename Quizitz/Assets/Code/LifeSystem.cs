@@ -60,6 +60,9 @@ public class LifeSystem : MonoBehaviour
         Time.timeScale = 1;                   // Resume the game (if paused)
     }
 
+
+   
+
     private System.Collections.IEnumerator FlashEffect()
     {
         // Fade in

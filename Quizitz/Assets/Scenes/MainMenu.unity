@@ -192,7 +192,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: -8328923581568760697, guid: 8f11af92c67b0bb448800f62dda62478, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -448,6 +448,7 @@ RectTransform:
   - {fileID: 113163968}
   - {fileID: 785351390}
   - {fileID: 1621532413}
+  - {fileID: 1090114128}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -525,7 +526,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: -8328923581568760697, guid: 8f11af92c67b0bb448800f62dda62478, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -1007,6 +1008,7 @@ GameObject:
   - component: {fileID: 588902834}
   - component: {fileID: 588902835}
   - component: {fileID: 588902836}
+  - component: {fileID: 588902837}
   m_Layer: 5
   m_Name: PLAY button
   m_TagString: Untagged
@@ -1046,6 +1048,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 988f511e4f3928f4d8a4fa816f297bf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeImage: {fileID: 1090114129}
+  fadeDuration: 1
 --- !u!114 &588902831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1109,6 +1113,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 8300000, guid: 46c68951b2ae2914fb64a9132f45ed62, type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 588902837}
+        m_TargetAssemblyTypeName: ScreenSlide, Assembly-CSharp
+        m_MethodName: PlaySlideIn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1192,6 +1208,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hoverSound: {fileID: 8300000, guid: 46c68951b2ae2914fb64a9132f45ed62, type: 3}
+--- !u!114 &588902837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 588902828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dd71995ce3a33a48810095cc104eed0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  whiteScreen: {fileID: 1090114128}
+  slideDuration: 1
 --- !u!1 &606929135
 GameObject:
   m_ObjectHideFlags: 0
@@ -1441,7 +1471,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: -8328923581568760697, guid: 8f11af92c67b0bb448800f62dda62478, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -1654,7 +1684,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: -8328923581568760697, guid: 8f11af92c67b0bb448800f62dda62478, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -1739,7 +1769,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: -8328923581568760697, guid: 8f11af92c67b0bb448800f62dda62478, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -1842,6 +1872,81 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1088433780}
   m_CullTransparentMesh: 1
+--- !u!1 &1090114127
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1090114128}
+  - component: {fileID: 1090114130}
+  - component: {fileID: 1090114129}
+  m_Layer: 5
+  m_Name: Fade effect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1090114128
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090114127}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 335735305}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -5817, y: 543}
+  m_SizeDelta: {x: 6612.317, y: 4908.088}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1090114129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090114127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1090114130
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090114127}
+  m_CullTransparentMesh: 1
 --- !u!1 &1136211128
 GameObject:
   m_ObjectHideFlags: 0
@@ -1912,7 +2017,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: -8328923581568760697, guid: 8f11af92c67b0bb448800f62dda62478, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -1997,7 +2102,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: -8328923581568760697, guid: 8f11af92c67b0bb448800f62dda62478, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -2210,7 +2315,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: -8328923581568760697, guid: 8f11af92c67b0bb448800f62dda62478, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -2295,7 +2400,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: -8328923581568760697, guid: 8f11af92c67b0bb448800f62dda62478, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
