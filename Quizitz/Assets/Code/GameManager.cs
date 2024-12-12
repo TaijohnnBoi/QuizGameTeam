@@ -18,6 +18,21 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject); // Persist across scenes
     }
 
+    private void Update()
+    {
+        // Check if the R key is pressed
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            RestartScene();
+        }
+
+        // Check if the T key is pressed
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            LoadScene("Tutorial");
+        }
+    }
+
     /// <summary>
     /// Restarts the current scene.
     /// </summary>
